@@ -199,6 +199,20 @@
 
         @media (max-width: 768px) {
             /* Adjust hero section for mobile */
+             .logo-wrapper {
+        flex-direction: row; /* Sol ve sağ logoları yazı ile yan yana getirecek */
+        justify-content: center; /* Ortalar */
+        gap: 20px; /* Aralarındaki boşluğu korur */
+    }
+              .logo {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .logo-circle {
+        width: 50px;
+        height: 50px;
+    }
             .hero h1 {
                 font-size: 2rem;
             }
