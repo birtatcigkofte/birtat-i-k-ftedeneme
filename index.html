@@ -18,12 +18,40 @@
             color: #333;
         }
 
+        /* Animasyon tanımları */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         .logo-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 20px;
             margin-bottom: 10px;
+            animation: scaleUp 0.8s ease-out both;
         }
 
         .logo {
@@ -50,6 +78,14 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
+        .logo-circle:first-child {
+            animation: slideInFromLeft 0.8s ease-out both;
+        }
+
+        .logo-circle:last-child {
+            animation: slideInFromRight 0.8s ease-out both;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -63,17 +99,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .logo {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
         nav ul {
             display: flex;
             justify-content: center;
             list-style: none;
+            animation: fadeIn 1s ease-out 0.3s both;
         }
 
         nav ul li {
@@ -84,11 +114,13 @@
             color: white;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
         }
 
         nav ul li a:hover {
             color: #ffcdd2;
+            transform: translateY(-2px);
         }
 
         .hero {
@@ -96,21 +128,26 @@
             color: white;
             text-align: center;
             padding: 100px 20px 60px;
+            animation: fadeIn 1s ease-out forwards;
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
+            animation: fadeIn 1s ease-out 0.2s both;
         }
 
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 0.4s both;
         }
 
         .branch-label {
             font-weight: bold;
             margin-top: 10px;
+            display: inline-block;
+            animation: fadeIn 1s ease-out 0.6s both;
         }
 
         .btn {
@@ -123,12 +160,15 @@
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            animation: fadeIn 1s ease-out 0.8s both;
         }
 
         .btn:hover {
             background-color: #c62828;
             color: white;
+            transform: translateY(-3px);
+            animation: pulse 0.5s ease;
         }
 
         .menu {
@@ -140,12 +180,14 @@
             margin-bottom: 40px;
             font-size: 2rem;
             color: #c62828;
+            animation: fadeIn 1s ease-out both;
         }
 
         .menu-items {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            counter-reset: item-counter;
         }
 
         .menu-item {
@@ -154,12 +196,28 @@
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             padding-bottom: 20px;
+            opacity: 0;
+            --order: counter(item-counter);
+            counter-increment: item-counter;
+            animation: fadeIn 0.6s ease-out forwards;
+            animation-delay: calc(var(--order) * 0.1s);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .menu-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.03);
         }
 
         .menu-item-content {
@@ -184,38 +242,43 @@
             color: #666;
         }
 
-        .branch-label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
         footer {
             background-color: #333;
             color: white;
             padding: 40px 0;
             text-align: center;
+            animation: fadeIn 1s ease-out both;
         }
-       
 
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out both;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        /* Mobil uyumluluk */
         @media (max-width: 768px) {
-            /* Adjust hero section for mobile */
-           .logo-wrapper {
-        flex-direction: row; /* Logolar ve yazı yan yana */
-        justify-content: center; /* Ortalamak */
-        gap: 15px; /* Aralarındaki boşluğu ayarlamak */
-    }
+            .logo-wrapper {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
 
-    /* Logoların boyutunu küçült */
-    .logo-circle {
-        width: 50px; /* Küçültülmüş logo boyutu */
-        height: 50px;
-    }
+            .logo-circle {
+                width: 50px;
+                height: 50px;
+            }
 
-    /* Yazı boyutunu küçült */
-    .logo {
-        font-size: 2rem; /* Daha küçük yazı boyutu */
-    }
+            .logo {
+                font-size: 2rem;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -224,35 +287,21 @@
                 font-size: 1rem;
             }
 
-            /* Adjust menu grid for mobile */
             .menu-items {
-                grid-template-columns: 1fr; /* Stack items on mobile */
+                grid-template-columns: 1fr;
             }
 
-            /* Reduce button size on smaller screens */
             .btn {
                 padding: 8px 16px;
                 font-size: 1rem;
             }
+        }
 
-            /* Adjust logo size */
-            .logo {
-                font-size: 2rem;
-            }
-
-            .logo-wrapper {
-                flex-direction: column; /* Stack logo items vertically */
-                gap: 10px;
-            }
-
-            /* Adjust footer text for mobile */
-            footer p {
-                font-size: 0.9rem;
-            }
-
-            /* Make the menu item images more responsive */
-            .menu-item img {
-                height: 150px;
+        /* Animasyonları kısıtlamayı tercih edenler için */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
             }
         }
     </style>
@@ -326,7 +375,6 @@
                     </div>
                 </div>
     
-    
                 <!-- Yarım Porsiyon -->
                 <div class="menu-item">
                     <img src="Yarım.jpg" alt="Yarım Porsiyon Çiğköfte">
@@ -342,8 +390,7 @@
                     </div>
                 </div>
                 
-                
-    <!-- Tam Porsiyon -->
+                <!-- Tam Porsiyon -->
                 <div class="menu-item">
                     <img src="Kilo.jpg" alt="Tam Porsiyon Çiğköfte">
                     <div class="menu-item-content">
@@ -358,8 +405,7 @@
                     </div>
                 </div>
                 
-                
-    <!-- Aile boyu -->
+                <!-- Aile boyu -->
                 <div class="menu-item">
                     <img src="Kilo.jpg" alt="Aile Boyu Çiğköfte">
                     <div class="menu-item-content">
@@ -374,49 +420,62 @@
                     </div>
                 </div>
             
-    
-    
-    
-    </body>
-    </html>
-    <!-- 1 Kilogram   -->
-    <div class="menu-item">
-        <img src="Kilo.jpg" alt="1 Kilogram Çiğköfte">
-        <div class="menu-item-content">
-            <h3 class="menu-item-title">1 Kilogram</h3>
-            <div class="menu-item-price">400₺</div>
-            <p class="menu-item-description">4 kişilik çiğköfte porsiyonu, marul, limon ve lavaş ile</p>
-            
-            <div style="text-align: center; margin-top: 10px;">
-                <span class="branch-label">Yeşilpınar</span>
-                <a href="https://tgoyemek.com/restoranlar/140666#bu-restoranin-en-sevilenleri" target="_blank" class="btn" style="margin-bottom: 15px;">Sipariş Ver</a>     
-                <span class="branch-label">Gaziosmanpaşa</span>
-                <a href="https://tgoyemek.com/restoranlar/129997" target="_blank" class="btn">Sipariş Ver</a>
-             </div>
-          </div>
+                <!-- 1 Kilogram -->
+                <div class="menu-item">
+                    <img src="Kilo.jpg" alt="1 Kilogram Çiğköfte">
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">1 Kilogram</h3>
+                        <div class="menu-item-price">400₺</div>
+                        <p class="menu-item-description">4 kişilik çiğköfte porsiyonu, marul, limon ve lavaş ile</p>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <span class="branch-label">Yeşilpınar</span>
+                            <a href="https://tgoyemek.com/restoranlar/140666#bu-restoranin-en-sevilenleri" target="_blank" class="btn" style="margin-bottom: 15px;">Sipariş Ver</a>     
+                            <span class="branch-label">Gaziosmanpaşa</span>
+                            <a href="https://tgoyemek.com/restoranlar/129997" target="_blank" class="btn">Sipariş Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
       
-      
-        <section id="contact" class="contact">
-    <footer>
-        <div class="container">
-            <div class="footer-logo">BİR-TAT ÇİĞKÖFTE</div>
-            <p>&copy; 2025 Tüm hakları saklıdır.</p>
-            <br>
-            <p>Gaziosmanpaşa tel no: 0535 767 92 05</p>   
-            <p>Yeşilpınar tel no: 0535 480 99 76</p>   
-            <br>
-            <p>Bayilik verilmektedir site içindeki numaralardan iletişime geçebilirsiniz.</p>
-            <br>
-            <p>Özel günlerde toplu sipariş alınmaktadır.</p>
-              <br>
-            <p>Resimler temsilidir, dükkandan dükkana değişiklik gösterebilir, gramaj ve kalite aynıdır.</p>
-          </div>
-        </div>
-        </div>
-    </footer>
+    <section id="contact" class="contact">
+        <footer>
+            <div class="container">
+                <div class="footer-logo">BİR-TAT ÇİĞKÖFTE</div>
+                <p>&copy; 2025 Tüm hakları saklıdır.</p>
+                <br>
+                <p>Gaziosmanpaşa tel no: 0535 767 92 05</p>   
+                <p>Yeşilpınar tel no: 0535 480 99 76</p>   
+                <br>
+                <p>Bayilik verilmektedir site içindeki numaralardan iletişime geçebilirsiniz.</p>
+                <br>
+                <p>Özel günlerde toplu sipariş alınmaktadır.</p>
+                <br>
+                <p>Resimler temsilidir, dükkandan dükkana değişiklik gösterebilir, gramaj ve kalite aynıdır.</p>
+            </div>
+        </footer>
     </section>
-    
 
+    <script>
+        // Sayfa yüklendiğinde menü öğelerinin animasyonunu tetikler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menü öğelerini görünür yapar
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.style.opacity = '1';
+            });
+            
+            // Nav linklerine hover efekti
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    link.style.transform = 'translateY(-2px)';
+                });
+                link.addEventListener('mouseleave', () => {
+                    link.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
